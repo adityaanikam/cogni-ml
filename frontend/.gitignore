@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+backend/
+.dockerignore
+docker-compose.yml
+render.yaml
+RUN.md
+test-connection.ps1
