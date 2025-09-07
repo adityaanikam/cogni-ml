@@ -23,11 +23,9 @@ def train_and_save_models(data_path='merged_training_dataset.csv'):
         logging.error(f"Training data file not found at {data_path}. Please ensure it is in the correct directory.")
         return
 
-    # --- Feature Engineering and Encoding ---
     logging.info("Starting feature engineering...")
     label_encoders = {}
 
-    # Define all categorical columns that need to be encoded
     categorical_cols = [
         'Gender', 'Marital Status', 'Type of Property (Rented/Owned)',
         'Education level', 'Employment Status', 'Product Type'
@@ -43,7 +41,6 @@ def train_and_save_models(data_path='merged_training_dataset.csv'):
 
     logging.info("Categorical features encoded successfully.")
 
-    # --- Model Training ---
 
     # 1. Eligibility Model
     logging.info("Training eligibility model...")
