@@ -11,20 +11,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, validator
 
-# Import the database module
 from Database import cibil_db
 
 
-# --- INITIAL SETUP ---
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Global variables for in-memory storage
 models = {}
 label_encoders = {}
 
 
-# --- CORE FUNCTIONS ---
 def load_ml_models():
     """Load all ML models and encoders from disk into memory."""
     global models, label_encoders
@@ -129,8 +125,6 @@ def check_eligibility_rules(cibil_score: int, salary: float, age: int) -> tuple:
         ]
         return 0, recommendations
     
-    # All checks passed - eligible for at least Silver tier products
-    # Note: Product type will be determined by the ML model based on profile
     if cibil_score < 600:
         recommendations = [
             "Eligible for Silver tier products",
@@ -331,10 +325,10 @@ class LoanRequest(BaseModel):
                 'Self-Employed': 'Self-Employed',
                 'Self Employed': 'Self-Employed',
                 'Selfemployed': 'Self-Employed',
-                'Freelancer': 'Self-Employed',     # Map freelancer to Self-Employed
-                'Consultant': 'Self-Employed',     # Map consultant to Self-Employed
-                'Business': 'Self-Employed',       # Map business to Self-Employed
-                'Entrepreneur': 'Self-Employed',   # Map entrepreneur to Self-Employed
+                'Freelancer': 'Self-Employed',     
+                'Consultant': 'Self-Employed',    
+                'Business': 'Self-Employed',       
+                'Entrepreneur': 'Self-Employed',   
                 'Government': 'Government',
                 'Govt': 'Government',
                 'Public': 'Government',
@@ -344,11 +338,11 @@ class LoanRequest(BaseModel):
                 'Studying': 'Student',
                 'Retired': 'Retired',
                 'Pension': 'Retired',
-                'Unemployed': 'Student',    # Map unemployed to Student as closest match
-                'Jobless': 'Student',       # Map jobless to Student as closest match
-                'Not Working': 'Student',   # Map not working to Student as closest match
-                'Housewife': 'Student',     # Map housewife to Student as closest match
-                'Homemaker': 'Student'      # Map homemaker to Student as closest match
+                'Unemployed': 'Student',    
+                'Jobless': 'Student',       
+                'Not Working': 'Student',   
+                'Housewife': 'Student',     
+                'Homemaker': 'Student'      
             }
             return employment_mapping.get(v, v)
             
